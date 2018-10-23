@@ -8,10 +8,9 @@ require qemu-targets.inc
 inherit autotools pkgconfig bluetooth
 BBCLASSEXTEND = "native nativesdk"
 
-# SRC_URI should be coordinated with SRCREV in qemu_2.11.1.bb.
-# If using "hpsc-0.9", set SRC_URI to use "nobranch=1"
-# Otherwise, use "branch=hpsc"
-SRC_URI = "git://github.com/ISI-apex/qemu.git;protocol=git;nobranch=1"
+# If SRCREV equals '${AUTOREV}', then specify 'branch=hpsc'
+# in SRC_URI, else specify 'nobranch=1'
+SRC_URI = "${@ "git://github.com/ISI-apex/qemu.git;protocol=git;branch=hpsc" if (d.getVar('SRCREV') == '${AUTOREV}') else "git://github.com/ISI-apex/qemu.git;protocol=git;nobranch=1" }"
 
 # QEMU_TARGETS is overridable variable
 QEMU_TARGETS ?= "aarch64"
